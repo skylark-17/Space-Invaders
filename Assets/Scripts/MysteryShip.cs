@@ -12,6 +12,8 @@ public class MysteryShip : MonoBehaviour
     public float cooldown = 20;
 
     public static int Score => Random.Range(30, 50) * 10;
+
+    public bool active = true; 
     
     private Vector3 _direction = Vector3.left;
     
@@ -55,6 +57,8 @@ public class MysteryShip : MonoBehaviour
 
     void Update()
     {
+        if (!active) return;
+        
         transform.position += _direction * (speed * Time.deltaTime);
         
         if (transform.position.x < _leftEdge.x - 5.0f)

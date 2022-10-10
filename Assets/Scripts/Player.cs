@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public Action HitInvader;
     public Action HitMissile;
     public Action PicUpPowerUp;
+
+    public bool active = true;
     
     private Camera _camera;
 
@@ -32,6 +34,8 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (!active) return;
+        
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             if (transform.position.x > _leftEdge.x + 1.0f)
@@ -72,6 +76,8 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        if (!active) return;
+        
         if (col.gameObject.layer == LayerMask.NameToLayer("Invader")) 
         {
             HitInvader?.Invoke();
