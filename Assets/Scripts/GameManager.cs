@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         _invaders.Killed += OnInvaderKilled;
         _invaders.TouchedBottom += GameOver;
         _mysteryShip.WhenKilled += OnMysteryShipKilled;
+        _player.PicUpPowerUp += OnPlayerPickUpPowerUp;
 
         NewGame();
     }
@@ -51,9 +52,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ReduceLives()
+    private void IncreaceLives(int x)
     {
-        lives = Math.Max(lives - 1, 0); 
+        lives = Math.Max(lives + x, 0); 
         livesText.text = lives.ToString();
     }
 
@@ -104,7 +105,7 @@ public class GameManager : MonoBehaviour
     
     private void OnPlayerHitMissile()
     {
-        ReduceLives();
+        IncreaceLives(-1);
         
         if (lives <= 0)
         {
@@ -116,6 +117,11 @@ public class GameManager : MonoBehaviour
         _invaders.gameObject.SetActive(false);
         
         Invoke(nameof(ResetPlayer), 2);
+    }
+
+    private void OnPlayerPickUpPowerUp()
+    {
+        IncreaceLives(1);
     }
 
     private void NewRound()

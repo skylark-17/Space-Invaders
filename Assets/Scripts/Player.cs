@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     public Action HitInvader;
     public Action HitMissile;
+    public Action PicUpPowerUp;
     
     private Camera _camera;
 
@@ -80,5 +81,11 @@ public class Player : MonoBehaviour
         {
             HitMissile?.Invoke();
         }
+        
+        if (col.gameObject.layer == LayerMask.NameToLayer("PowerUp"))
+        {
+            PicUpPowerUp?.Invoke();
+        }
+
     }
 }

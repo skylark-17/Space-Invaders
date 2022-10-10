@@ -126,7 +126,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSprites: []
+  score: 10
   animationTime: 1
+  powerUpPrefab: {fileID: -3800103984391852063, guid: 1332cc2bcac4db241ba22c96d863c2a8, type: 3}
 --- !u!50 &7117678998895991109
 Rigidbody2D:
   serializedVersion: 4
