@@ -10,8 +10,6 @@ using Random = UnityEngine.Random;
 
 public class Invader : MonoBehaviour
 {
-    //TODO invaders don't stop when player hit
-    
     public Sprite[] animationSprites;
 
     public int score = 10;

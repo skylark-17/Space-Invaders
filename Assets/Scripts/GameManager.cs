@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
         _player.transform.position = position;
         
         _player.gameObject.SetActive(true);
-        _invaders.gameObject.SetActive(true);
     }
 
     private void OnMysteryShipKilled()
@@ -102,21 +101,32 @@ public class GameManager : MonoBehaviour
         
         Invoke(nameof(NewRound), 2);
     }
+
+    private void SetActive()
+    {
+        _player.active = true;
+        _invaders.active = true;
+    }
+    
+    private void SetInActive()
+    {
+        _player.active = false;
+        _invaders.active = false;
+    }
     
     private void OnPlayerHitMissile()
     {
         IncreaceLives(-1);
+
+        SetInActive();
         
         if (lives <= 0)
         {
             GameOver();
             return;
         }
-        
-        _player.gameObject.SetActive(false);
-        _invaders.gameObject.SetActive(false);
-        
-        Invoke(nameof(ResetPlayer), 2);
+
+        Invoke(nameof(SetActive), 2);
     }
 
     private void OnPlayerPickUpPowerUp()
@@ -133,6 +143,7 @@ public class GameManager : MonoBehaviour
         {
             bunker.gameObject.SetActive(true);
         }
+        
         _mysteryShip.Stop();
         _mysteryShip.Start();
         
@@ -147,6 +158,11 @@ public class GameManager : MonoBehaviour
         _invaders.gameObject.SetActive(false);
         _player.gameObject.SetActive(false);
         
+        foreach (var bunker in _bunkers)
+        {
+            bunker.gameObject.SetActive(false);
+        }
+        
         _mysteryShip.Stop();
         _mysteryShip.gameObject.SetActive(false);
     }
@@ -157,6 +173,8 @@ public class GameManager : MonoBehaviour
         
         ResetScore();
         ResetLives(3);
+        
+        SetActive();
         
         NewRound();
     }
