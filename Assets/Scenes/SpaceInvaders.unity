@@ -851,7 +851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 247999396}
   livesText: {fileID: 1484722996}
-  GameOverScreen: {fileID: 1710128370}
+  gameOverScreen: {fileID: 1710128370}
   score: 0
   lives: 3
 --- !u!222 &969440806
@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 1385777286}
   - component: {fileID: 1385777285}
   - component: {fileID: 1385777287}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1871,7 +1871,7 @@ GameObject:
   - component: {fileID: 1727621591}
   - component: {fileID: 1727621590}
   - component: {fileID: 1727621592}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}

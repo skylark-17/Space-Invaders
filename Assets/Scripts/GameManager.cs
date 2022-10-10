@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text livesText;
 
-    public TMP_Text GameOverScreen;
+    public TMP_Text gameOverScreen;
 
     public int score = 0;
     public int lives = 3;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        GameOverScreen.gameObject.SetActive(false);
+        gameOverScreen.gameObject.SetActive(false);
         
         _player.HitInvader += GameOver;
         _player.HitMissile += OnPlayerHitMissile;
@@ -127,6 +127,8 @@ public class GameManager : MonoBehaviour
         {
             bunker.gameObject.SetActive(true);
         }
+        _mysteryShip.Stop();
+        _mysteryShip.Start();
         
         ResetPlayer();
     }
@@ -135,15 +137,17 @@ public class GameManager : MonoBehaviour
     {
         ResetLives();
         
-        GameOverScreen.gameObject.SetActive(true);
+        gameOverScreen.gameObject.SetActive(true);
         _invaders.gameObject.SetActive(false);
         _player.gameObject.SetActive(false);
+        
+        _mysteryShip.Stop();
         _mysteryShip.gameObject.SetActive(false);
     }
     
     private void NewGame()
     {
-        GameOverScreen.gameObject.SetActive(false);
+        gameOverScreen.gameObject.SetActive(false);
         
         ResetScore();
         ResetLives(3);

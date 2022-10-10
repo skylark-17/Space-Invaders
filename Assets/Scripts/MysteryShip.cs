@@ -31,7 +31,7 @@ public class MysteryShip : MonoBehaviour
         _leftEdge = _camera.ViewportToWorldPoint(Vector3.zero);
         _rightEdge = _camera.ViewportToWorldPoint(Vector3.right);
         
-        InvokeRepeating(nameof(Appear), cooldown, cooldown);
+        Start();
     }
 
     private void Appear()
@@ -41,6 +41,16 @@ public class MysteryShip : MonoBehaviour
         transform.position = position;
  
         gameObject.SetActive(true);
+    }
+
+    public void Stop()
+    {
+        CancelInvoke(nameof(Appear));
+    }
+
+    public void Start()
+    {
+        InvokeRepeating(nameof(Appear), cooldown, cooldown);
     }
 
     void Update()
