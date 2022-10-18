@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         _invaders.TouchedBottom += GameOver;
         _mysteryShip.WhenKilled += OnMysteryShipKilled;
         _player.PicUpPowerUp += OnPlayerPickUpPowerUp;
+        _player.MysteryShipAppear += _mysteryShip.Appear;
 
         NewGame();
     }
@@ -143,10 +144,7 @@ public class GameManager : MonoBehaviour
         {
             bunker.gameObject.SetActive(true);
         }
-        
-        _mysteryShip.Stop();
-        _mysteryShip.Start();
-        
+
         ResetPlayer();
     }
     
@@ -163,7 +161,6 @@ public class GameManager : MonoBehaviour
             bunker.gameObject.SetActive(false);
         }
         
-        _mysteryShip.Stop();
         _mysteryShip.gameObject.SetActive(false);
     }
     

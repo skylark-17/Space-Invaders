@@ -112,7 +112,7 @@ public class Invaders : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!active) return;
         

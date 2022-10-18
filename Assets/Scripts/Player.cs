@@ -14,8 +14,13 @@ public class Player : MonoBehaviour
     public Action HitInvader;
     public Action HitMissile;
     public Action PicUpPowerUp;
+    public Action MysteryShipAppear;
 
     public bool active = true;
+
+    public int MysteryShipCoolDown = 20;
+
+    private int _shotsDone = 0;
     
     private Camera _camera;
 
@@ -32,7 +37,7 @@ public class Player : MonoBehaviour
         _rightEdge = _camera.ViewportToWorldPoint(Vector3.right);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!active) return;
         
@@ -62,6 +67,13 @@ public class Player : MonoBehaviour
     private void Shoot()
     {
         if (!_readyToShoot) return;
+
+        ++_shotsDone;
+        if (_shotsDone == MysteryShipCoolDown)
+        {
+            MysteryShipAppear.Invoke();
+            _shotsDone = 0;
+        }
         
         var projectile = Instantiate(laserPrefab, transform.position, Quaternion.identity);
         projectile.WhenDestroyed += OnLaserDestroyed; 
