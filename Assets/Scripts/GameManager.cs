@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text livesText;
 
-    public TMP_Text GameOverScreen;
+    public TMP_Text gameOverScreen;
 
     public int score = 0;
     public int lives = 3;
@@ -32,13 +32,15 @@ public class GameManager : MonoBehaviour
     
     private void Start()
     {
-        GameOverScreen.gameObject.SetActive(false);
+        gameOverScreen.gameObject.SetActive(false);
         
         _player.HitInvader += GameOver;
         _player.HitMissile += OnPlayerHitMissile;
         _invaders.Killed += OnInvaderKilled;
         _invaders.TouchedBottom += GameOver;
         _mysteryShip.WhenKilled += OnMysteryShipKilled;
+        _player.PicUpPowerUp += OnPlayerPickUpPowerUp;
+        _player.MysteryShipAppear += _mysteryShip.Appear;
 
         NewGame();
     }
@@ -51,9 +53,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ReduceLives()
+    private void IncreaceLives(int x)
     {
-        lives = Math.Max(lives - 1, 0); 
+        lives = Math.Max(lives + x, 0); 
         livesText.text = lives.ToString();
     }
 
@@ -82,7 +84,6 @@ public class GameManager : MonoBehaviour
         _player.transform.position = position;
         
         _player.gameObject.SetActive(true);
-        _invaders.gameObject.SetActive(true);
     }
 
     private void OnMysteryShipKilled()
@@ -101,21 +102,37 @@ public class GameManager : MonoBehaviour
         
         Invoke(nameof(NewRound), 2);
     }
+
+    private void SetActive()
+    {
+        _player.active = true;
+        _invaders.active = true;
+    }
+    
+    private void SetInActive()
+    {
+        _player.active = false;
+        _invaders.active = false;
+    }
     
     private void OnPlayerHitMissile()
     {
-        ReduceLives();
+        IncreaceLives(-1);
+
+        SetInActive();
         
         if (lives <= 0)
         {
             GameOver();
             return;
         }
-        
-        _player.gameObject.SetActive(false);
-        _invaders.gameObject.SetActive(false);
-        
-        Invoke(nameof(ResetPlayer), 2);
+
+        Invoke(nameof(SetActive), 2);
+    }
+
+    private void OnPlayerPickUpPowerUp()
+    {
+        IncreaceLives(1);
     }
 
     private void NewRound()
@@ -127,7 +144,7 @@ public class GameManager : MonoBehaviour
         {
             bunker.gameObject.SetActive(true);
         }
-        
+
         ResetPlayer();
     }
     
@@ -135,18 +152,26 @@ public class GameManager : MonoBehaviour
     {
         ResetLives();
         
-        GameOverScreen.gameObject.SetActive(true);
+        gameOverScreen.gameObject.SetActive(true);
         _invaders.gameObject.SetActive(false);
         _player.gameObject.SetActive(false);
+        
+        foreach (var bunker in _bunkers)
+        {
+            bunker.gameObject.SetActive(false);
+        }
+        
         _mysteryShip.gameObject.SetActive(false);
     }
     
     private void NewGame()
     {
-        GameOverScreen.gameObject.SetActive(false);
+        gameOverScreen.gameObject.SetActive(false);
         
         ResetScore();
         ResetLives(3);
+        
+        SetActive();
         
         NewRound();
     }

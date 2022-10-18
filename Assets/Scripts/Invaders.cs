@@ -27,6 +27,8 @@ public class Invaders : MonoBehaviour
 
     public Action TouchedBottom;
 
+    public bool active = true;
+
     private Vector3 _initialPosition;
     
     private Vector3 _direction = Vector3.right;
@@ -96,6 +98,8 @@ public class Invaders : MonoBehaviour
 
     private void MissileAttack()
     {
+        if (!active) return;
+        
         foreach (Transform invader in transform)
         {
             if (!invader.gameObject.activeInHierarchy) continue;
@@ -108,8 +112,10 @@ public class Invaders : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (!active) return;
+        
         transform.position += _direction * (speed.Evaluate(PercentKilled) * Time.deltaTime);
         
         foreach (Transform invader in transform)

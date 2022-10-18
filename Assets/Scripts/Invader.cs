@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Invader : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class Invader : MonoBehaviour
     public int score = 10;
     
     public float animationTime = 1;
+
+    public Projectile powerUpPrefab;
+
+    public float powerUpChance = 0.1f;
 
     public Action<Invader> WhenKilled;
 
@@ -49,6 +54,11 @@ public class Invader : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Laser"))
         {
+            if (Random.value < powerUpChance)
+            {
+                Instantiate(powerUpPrefab, gameObject.transform.position, Quaternion.identity);
+            }
+
             WhenKilled?.Invoke(this);
             
             gameObject.SetActive(false);

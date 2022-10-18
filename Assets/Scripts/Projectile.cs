@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour
 
     public Action WhenDestroyed;
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.position += direction * (speed * Time.deltaTime);
     }

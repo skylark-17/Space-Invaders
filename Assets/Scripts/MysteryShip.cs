@@ -12,7 +12,7 @@ public class MysteryShip : MonoBehaviour
     public float cooldown = 20;
 
     public static int Score => Random.Range(30, 50) * 10;
-    
+
     private Vector3 _direction = Vector3.left;
     
     private Camera _camera;
@@ -30,11 +30,9 @@ public class MysteryShip : MonoBehaviour
         
         _leftEdge = _camera.ViewportToWorldPoint(Vector3.zero);
         _rightEdge = _camera.ViewportToWorldPoint(Vector3.right);
-        
-        InvokeRepeating(nameof(Appear), cooldown, cooldown);
     }
 
-    private void Appear()
+    public void Appear()
     {
         var position = transform.position;
         position.x = _rightEdge.x + 5.0f;
@@ -43,7 +41,7 @@ public class MysteryShip : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.position += _direction * (speed * Time.deltaTime);
         
