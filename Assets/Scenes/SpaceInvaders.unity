@@ -423,7 +423,7 @@ MonoBehaviour:
   speed: 5
   laserPrefab: {fileID: 2299538307230382237, guid: 301bf3af81be8a44d9ef7698a61695c4, type: 3}
   active: 1
-  MysteryShipCoolDown: 5
+  MysteryShipCoolDown: 20
 --- !u!50 &484470467
 Rigidbody2D:
   serializedVersion: 4
